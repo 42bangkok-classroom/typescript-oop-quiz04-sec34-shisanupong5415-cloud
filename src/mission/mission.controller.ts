@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { MissionService } from './mission.service';
 
 @Controller('missions')
@@ -9,4 +9,10 @@ export class MissionController {
   getSummary() {
     return this.missionService.getSummary();
   }
+  
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    this.missionService.remove(Number(id));
+    return { message: `Mission with id ${id} has been removed.` };
+}
 }

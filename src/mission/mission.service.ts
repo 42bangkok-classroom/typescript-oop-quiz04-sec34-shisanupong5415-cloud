@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class MissionService {
@@ -18,5 +18,13 @@ export class MissionService {
       },
       {} as Record<string, number>,
     );
+  }
+  remove(id: number) {
+    const index = this.missions.findIndex(mission => mission.id === id);
+    if (index === -1) {
+      throw new NotFoundException(`Not Found`);
+    }
+    this.missions.splice(index, 1);
+    return { success: true, message: `Mission ${id} removed.` };
   }
 }
